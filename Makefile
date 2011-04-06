@@ -21,8 +21,8 @@ PACKAGE = uw-wkrpt
 
 # Use pdfLaTeX for best results
 LATEX = pdflatex
-LATEX2DVI = $(LATEX) \\pdfoutput=0 \\input
-LATEX2PDF = $(LATEX) \\pdfoutput=1 \\input
+LATEX2DVI = latex 
+LATEX2PDF = $(LATEX)
 
 # MakeIndex parameters
 MAKEINDEX = makeindex
@@ -34,7 +34,7 @@ BIBTEX = bibtex
 
 # Texi2DVI knows most about compilation
 TEXI2DVI = LATEX="$(LATEX2DVI)" texi2dvi -l latex
-TEXI2PDF = PDFLATEX="$(LATEX2PDF)" texi2dvi -l latex -p
+TEXI2PDF = PDFLATEX="$(LATEX)" texi2dvi -l latex -p
 
 
 # Installation
