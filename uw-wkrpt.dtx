@@ -50,7 +50,7 @@
 % \fi
 %
 % \StopEventually{\PrintIndex \PrintChanges}
-% \CheckSum{938}
+% \CheckSum{0}
 %
 % \DoNotIndex{\#,\$,\#,\&,\@,\\,\{,\},\^,\_,\~,\ }
 % \DoNotIndex{\addcontentsline, \addpenalty, \addtolength, \advance, \and}
@@ -319,6 +319,11 @@
 % The |\uwid|\marg{text} command defines the author's student 
 % identification number.
 % \end{DescribeMacro}
+% 
+% \begin{DescribeMacro}{\userid}
+% The |\userid|\marg{text} command defines the author's alphanumeric 
+% user id, e.g. j2smith. 
+% \end{DescribeMacro}    
 %
 % \begin{DescribeMacro}{\address}
 % The |\address|\marg{text} command defines the author's home address.
@@ -452,6 +457,7 @@
 % \begin{DescribeMacro}{\theauthor}
 % \begin{DescribeMacro}{\thetitle}
 % \begin{DescribeMacro}{\theuwid}
+% \begin{DescribeMacro}{\theuserid}
 % \begin{DescribeMacro}{\theaddress}
 % \begin{DescribeMacro}{\theemployer}
 % \begin{DescribeMacro}{\theemployeraddress}
@@ -461,6 +467,7 @@
 % command defined in the previous sections.  Although these macros
 % can be used anywhere in the report, they are used primarily in the 
 % \textbf{letter} environment, see Section \ref{sec:prelim}.
+% \end{DescribeMacro}
 % \end{DescribeMacro}
 % \end{DescribeMacro}
 % \end{DescribeMacro}
@@ -777,16 +784,6 @@
 % \changes{v2.0}{2003/04/26}{Select between different programs'
 %                            guidelines.}
 %
-% Work reports must always be set in 12 pt.\ type.  Warn the author if
-% he specifies smaller type, and use 12 pt.\ nevertheless.
-%    \begin{macrocode}
-\DeclareOption{10pt}{\ClassWarning{uw-wkrpt}{%
-  You requested a 10pt font but reports must be 12pt}}
-\DeclareOption{11pt}{\ClassWarning{uw-wkrpt}{%
-  You requested a 11pt font but reports must be 12pt}}
-%    \end{macrocode}
-%
-% \changes{v2.0}{2003/04/25}{Enforce 12 pt.\ type.}
 %
 % Finally, we declare a |blockletter| option that formats the
 % letter of submittal in block format.  The default letter format 
@@ -806,7 +803,7 @@
 %    \begin{macrocode}
 \DeclareOption*{\PassOptionsToClass {\CurrentOption}{article}}
 \ProcessOptions
-\LoadClass[titlepage,12pt]{article}
+\LoadClass[titlepage,11pt]{article}
 %    \end{macrocode}
 %
 % To parse the required arguments, the \textsf{ifthen} package is loaded.
@@ -833,11 +830,11 @@
 \ifx\FP@margin\undefined
   \newlength{\FP@margin}
 \fi
-\setlength{\FP@margin}{1.5in}
+\setlength{\FP@margin}{1in}
 \setlength{\textwidth}{\paperwidth}
-\addtolength{\textwidth}{-2\FP@margin}
+\addtolength{\textwidth}{-2.5\FP@margin}
 \setlength{\oddsidemargin}{\FP@margin}
-\addtolength{\oddsidemargin}{-1in}
+\addtolength{\oddsidemargin}{-0.5in}
 \setlength{\evensidemargin}{\oddsidemargin}
 %    \end{macrocode}
 % \changes{v2.0}{2003/04/21}{Set margins correctly.}
@@ -859,7 +856,7 @@
 % \changes{v2.4}{2003/05/10}{Fixed one-and-half-spacing vs. double-spacing.}
 %    \begin{macrocode}
 \RequirePackage{setspace}
-\newcommand{\uwwkrpt@spacing}{\doublespacing}
+\newcommand{\uwwkrpt@spacing}{\onehalfspacing}
 \ifthenelse{\boolean{uwwkrpt@se}}
   {\renewcommand{\uwwkrpt@spacing}{\onehalfspacing}}{}
 %    \end{macrocode}
@@ -933,6 +930,7 @@
 % \end{macro}
 %
 % \begin{macro}{\uwid}
+% \begin{macro}{\userid}
 % \begin{macro}{\address}
 % \begin{macro}{\employer}
 % \begin{macro}{\employeraddress}
@@ -952,6 +950,9 @@
 \newcommand{\uwid}[1]{\renewcommand{\@uwid}{#1}}
   \newcommand{\@uwid}{\ClassError{uw-wkrpt}%
     {No \noexpand\uwid given}{}}
+\newcommand{\userid}[1]{\renewcommand{\@userid}{#1}}
+  \newcommand{\@userid}{\ClassError{uw-wkrpt}%
+    {No \noexpand\userid given}{}}
 \newcommand{\address}[1]{\renewcommand{\@address}{#1}}
   \newcommand{\@address}{\ClassError{uw-wkrpt}%
     {No \noexpand\address given}{}}
@@ -994,6 +995,7 @@
 % \end{macro}
 % \end{macro}
 % \end{macro}
+% \end{macro}
 %
 % \begin{macro}{\confidential}
 % |\confidential| is an optional value, see Section \ref{sec:optvalues}.
@@ -1009,6 +1011,7 @@
 % \begin{macro}{\theauthor}
 % \begin{macro}{\thedate}
 % \begin{macro}{\theuwid}
+% \begin{macro}{\theuserid}
 % \begin{macro}{\theaddress}
 % \begin{macro}{\theemployer}
 % \begin{macro}{\theemployeraddress}
@@ -1026,6 +1029,7 @@
 \newcommand{\thetitle}{\@@title}
 \newcommand{\theauthor}{\@@author}
 \newcommand{\theuwid}{\@uwid}
+\newcommand{\theuserid}{\@userid}
 \newcommand{\theaddress}{\@address}
 \newcommand{\theemployer}{\@employer}
 \newcommand{\theemployeraddress}{\@employeraddress}
@@ -1039,6 +1043,7 @@
 \newcommand{\thedate}{\@@date}
 \newcommand{\theconfidential}{\@confidential}
 %    \end{macrocode}
+% \end{macro}
 % \end{macro}
 % \end{macro}
 % \end{macro}
@@ -1089,9 +1094,9 @@
       Prepared by\\
       \begin{tabular}[t]{c}%
         \@author\\
-        ID \#\@uwid\\
-        \@email\\
-        \@term{} \@program
+        ID \@uwid\\
+        userid \@userid\\
+        \@term{} \\
       \end{tabular}\par}%
     {\large \@date \par}%       % Set date in \large size.
   \end{center}
@@ -1166,19 +1171,15 @@
   \singlespacing%
 %    \end{macrocode}
 %
-% The header block is created.  First, the author and the author's
+% The header block is created.  First,  the author's
 % address; then the current date; then the receiver of the report and
 % his address; and finally the salutation.
 %    \begin{macrocode}
-  \noindent\@@author\\\@address\par\noindent%
+  \noindent\@address\par\noindent%
   \@@date \par\noindent%
   \@chair, Chair\\*\@chairaddress\par\noindent%
   Dear \@chair:%
-%    \end{macrocode}
-%
-% Create a subject line, much like formal business letters of old.
-%    \begin{macrocode}
-  \begin{center}\textbf{Re: Submission of my work term report.}\end{center}}
+  }
 %    \end{macrocode}
 %
 % The author types her letter, and mentions all the things she is
@@ -1240,9 +1241,9 @@
   \vspace*{\uwwkrpt@parskip}
   Yours sincerely,\\*%
   \rule{0in}{0.3in}\\*{\hrule \@width 3in}%
-  \noindent\@@author, \@uwid
+  \noindent\@@author, \\*ID \@uwid
   \par\noindent
-  Encl.%
+
   \end{minipage}
 %    \end{macrocode}
 %
@@ -1716,7 +1717,7 @@
 % The only difference is that |@ELECTRONIC{}| does not exist as a type
 % of citation, but this can be emulated with |@MISC{}|.
 %    \begin{macrocode}
-\bibliographystyle{ieeetr}
+\bibliographystyle{IEEEtran}
 %    \end{macrocode}
 %
 % In the future, I may consider adding support for the more recent IEEE
