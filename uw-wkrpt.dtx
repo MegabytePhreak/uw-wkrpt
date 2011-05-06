@@ -1104,7 +1104,7 @@
         \@author\\
         ID \@uwid\\
         userid \@userid\\
-        \@term{} \\
+        \@term{} \@program\\
       \end{tabular}\par}%
     {\large \@date \par}%       % Set date in \large size.
   \end{center}
@@ -1184,8 +1184,12 @@
 % his address; and finally the salutation.
 %    \begin{macrocode}
   \noindent\@address\par\noindent%
+  \\*
   \@@date \par\noindent%
+  \\*
   \@chair, Chair\\*\@chairaddress\par\noindent%
+  \\*
+  \\*
   Dear \@chair:%
   }
 %    \end{macrocode}
